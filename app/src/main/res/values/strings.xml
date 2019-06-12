@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Ex4</string>
+    <string name="app_name">Flight Simulator</string>
+    <string name="connect">Connect</string>
+    <string name="portHint">Type Port Here</string>
+    <string name="IPHint">Type IP Here</string>
+    <string name="port">Port</string>
+    <string name="ip">IP</string>
 </resources>

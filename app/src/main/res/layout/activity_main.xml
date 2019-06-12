@@ -32,17 +32,17 @@
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:layout_marginLeft="10dp"
-                android:text="IP"
+                android:text="@string/ip"
                 android:textColor="#000"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/userName"
+                android:id="@+id/ip"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:layout_marginLeft="10dp"
                 android:background="#fff"
-                android:hint="Type IP here"
+                android:hint="@string/IPHint"
                 android:padding="5dp"
                 android:textColor="#000" />
         </TableRow>
@@ -54,18 +54,18 @@
                 android:layout_column="0"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
-                android:text="Port"
+                android:text="@string/port"
                 android:textColor="#000"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/port"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:background="#fff"
-                android:hint="Type port here"
+                android:hint="@string/portHint"
                 android:padding="5dp"
                 android:textColor="#000" />
         </TableRow>
@@ -79,9 +79,10 @@
                 android:layout_gravity="center"
                 android:layout_span="2"
                 android:background="#6495ed"
-                android:text="Connect"
+                android:text="@string/connect"
                 android:textColor="#000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:onClick="Connect"/>
         </TableRow>
     </TableLayout>
 
