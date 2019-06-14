@@ -60,9 +60,12 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
     }
 
-
-    public void stopClient() {
-}
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        //close socket
+        //close thread
+    }
 
 
 }
