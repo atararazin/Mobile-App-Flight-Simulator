@@ -71,7 +71,7 @@
         </TableRow>
 
 
-        <TableRow android:layout_marginTop="20dp">
+        <TableRow android:layout_marginTop="40dp">
 
             <Button
                 android:id="@+id/connectBtn"

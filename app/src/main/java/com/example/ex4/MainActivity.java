@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Connect(View view){
-        InetAddress serverAddr = null;
         EditText editTextIp = (EditText)findViewById(R.id.ip);
         String ip = editTextIp.getText().toString();
         System.out.println(ip+"ip");
@@ -33,19 +32,8 @@ public class MainActivity extends AppCompatActivity {
         int port = Integer.parseInt(portString);
         System.out.println(port+"port");
 
-        try{
-            serverAddr = InetAddress.getByName(ip);
-        }
-        catch(Exception e){
-            System.out.println("invalid ip!");
-        }
+        Client.Create(ip,port);
 
-        try{
-            Socket socket = new Socket(serverAddr, port);
-        }
-        catch(Exception e){
-            System.out.println("couldnt open socket!");
-        }
         Intent intent = new Intent(this, JoystickActivity.class);
         startActivity(intent);
         }
@@ -59,13 +47,4 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(runnable);
         thread.start();
     }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        //close socket
-        //close thread
-    }
-
-
 }
