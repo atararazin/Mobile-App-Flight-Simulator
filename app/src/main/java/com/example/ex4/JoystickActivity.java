@@ -3,7 +3,9 @@ package com.example.ex4;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,42 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
     private int _xDelta;
     private int _yDelta;
 
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        super.onWindowFocusChanged(hasFocus);
+
+        if(hasFocus) {
+
+            _root = (ViewGroup)findViewById(R.id.relativeRoot);
+            _knob = (ImageView) findViewById(R.id.knob);
+
+            //////////////////////////////////////////////////////////////////////////////
+            Rect offsetViewBounds = new Rect();
+            //returns the visible bounds
+            _knob.getDrawingRect(offsetViewBounds);
+            // calculates the relative coordinates to the parent
+            _root.offsetDescendantRectToMyCoords(_knob, offsetViewBounds);
+
+            int relativeTop = offsetViewBounds.top;
+            int relativeLeft = offsetViewBounds.left;
+
+            //////////////////////////////////////////////////////////////////////////////
+
+
+            int[] pos = new int[2];
+            _knob.getLocationOnScreen(pos);
+
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(150, 150);
+            layoutParams.topMargin = (int)_knob.getY() +50;
+            layoutParams.leftMargin = (int)_knob.getX() +50;
+
+            _knob.setLayoutParams(layoutParams);
+            _knob.setOnTouchListener(this);
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +70,36 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
 
         _knob = (ImageView) findViewById(R.id.knob);
 
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(150, 50);
-        layoutParams.leftMargin = 50;
-        layoutParams.topMargin = 50;
-        layoutParams.bottomMargin = -250;
-        layoutParams.rightMargin = -250;
-        _knob.setLayoutParams(layoutParams);
 
-        _knob.setOnTouchListener(this);
+        //////////////////////////////////////////////////////////////////////////////
+        Rect offsetViewBounds = new Rect();
+        //returns the visible bounds
+        _knob.getDrawingRect(offsetViewBounds);
+        // calculates the relative coordinates to the parent
+        _root.offsetDescendantRectToMyCoords(_knob, offsetViewBounds);
+
+        int relativeTop = offsetViewBounds.top;
+        int relativeLeft = offsetViewBounds.left;
+        Log.d("a" ,String.valueOf(_knob.getTop()));
+        Log.d("a" ,String.valueOf(_knob.getLeft()));
+
+        //////////////////////////////////////////////////////////////////////////////
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(98, 114);
+        //layoutParams.leftMargin = 50;
+        //layoutParams.topMargin = 50;
+        //layoutParams.bottomMargin = -250;
+        //layoutParams.rightMargin = -250;
+
+        //layoutParams.topMargin = relativeTop;
+        //layoutParams.leftMargin = relativeLeft;
+
+
+        //layoutParams.topMargin = _knob.getTop();
+        //layoutParams.leftMargin = _knob.getLeft();
+        //_knob.setLayoutParams(layoutParams);
+
+        //_knob.setOnTouchListener(this);
     }
 
     public boolean onTouch(View view, MotionEvent event) {
