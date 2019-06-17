@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import android.view.Display;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.content.Context;
 
 public class JoystickActivity extends AppCompatActivity implements View.OnTouchListener {
 
@@ -35,8 +37,10 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
 
     private boolean isInCircle(int x, int y)
     {
-        int diffX = originalX - x + 40;
-        int diffY = originalY - y + 280;
+        //int diffX = originalX - x + 40;
+        //int diffY = originalY - y + 280;
+        int diffX = originalX - x;
+        int diffY = originalY - y;
         double d = Math.sqrt( Math.pow(diffX, 2) + Math.pow(diffY, 2));
         return d <= radius;
 
@@ -64,30 +68,24 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
             ImageView outer = (ImageView) findViewById(R.id.outerCircle);
             radius = (outer.getBottom() - outer.getTop()) / 2;
             outerBot = outer.getBottom();
-            outerTop = outer.getTop();;
-
-            //////////////////////////////////////////////////////////////////////////////
-            Rect offsetViewBounds = new Rect();
-            //returns the visible bounds
-            _knob.getDrawingRect(offsetViewBounds);
-            // calculates the relative coordinates to the parent
-            _root.offsetDescendantRectToMyCoords(_knob, offsetViewBounds);
-
-            int relativeTop = offsetViewBounds.top;
-            int relativeLeft = offsetViewBounds.left;
-
-            //////////////////////////////////////////////////////////////////////////////
+            outerTop = outer.getTop();
 
 
-            int[] pos = new int[2];
-            _knob.getLocationOnScreen(pos);
 
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(150, 150);
-            layoutParams.topMargin = (int)_knob.getY() +50;
-            layoutParams.leftMargin = (int)_knob.getX() +50;
+            float factor = getResources().getDisplayMetrics().density;
+            int w  = (int)factor * 98;
+            int h = (int) factor * 114;
 
-            originalX = (int)_knob.getX() +50;
-            originalY = (int)_knob.getY() +50;
+            //RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(98, 114);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(w, h);
+            //RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) _knob.getLayoutParams();
+            layoutParams.topMargin = (int)_knob.getY() +20;
+            layoutParams.leftMargin = (int)_knob.getX() +20;
+            //layoutParams.topMargin = (int)_knob.getY();
+            //layoutParams.leftMargin = (int)_knob.getX();
+
+            originalX = (int)_knob.getX() +20;
+            originalY = (int)_knob.getY() +20;
 
             _knob.setLayoutParams(layoutParams);
             _knob.setOnTouchListener(this);
@@ -110,6 +108,9 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
                 RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
                 _xDelta = X - lParams.leftMargin;
                 _yDelta = Y - lParams.topMargin;
+                //_xDelta = 0;
+                //_yDelta = 0;
+
                 break;
             case MotionEvent.ACTION_UP:
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
@@ -127,7 +128,8 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
                 layoutParams1.topMargin = Y - _yDelta;
                 layoutParams1.rightMargin = -250;
                 layoutParams1.bottomMargin = -250;
-                if (isInCircle(X,Y))
+                //if (isInCircle(X,Y))
+                if (isInCircle(layoutParams1.leftMargin, layoutParams1.topMargin))
                 {
                     view.setLayoutParams(layoutParams1);
                     //Log.d("ACTION_MOVE" ,String.valueOf(_xDelta));
