@@ -25,26 +25,16 @@ public class MainActivity extends AppCompatActivity {
     public void Connect(View view){
         EditText editTextIp = (EditText)findViewById(R.id.ip);
         String ip = editTextIp.getText().toString();
-        System.out.println(ip+"ip");
 
         EditText editTextPort = (EditText)findViewById(R.id.port);
         String portString = editTextPort.getText().toString();
         int port = Integer.parseInt(portString);
-        System.out.println(port+"port");
 
-        Client.Create(ip,port);
+        ConnectTask connectTask = new ConnectTask(ip,port);
+        connectTask.execute();
+
 
         Intent intent = new Intent(this, JoystickActivity.class);
         startActivity(intent);
         }
-
-    public void sendMessage(final String message) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
-    }
 }
