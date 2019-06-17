@@ -27,6 +27,30 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
     private int isFirst;
     private int originalX;
     private int originalY;
+    private int radius;
+
+    private int outerTop;
+    private int outerBot;
+
+
+    private boolean isInCircle(int x, int y)
+    {
+        int diffX = originalX - x + 40;
+        int diffY = originalY - y + 280;
+        double d = Math.sqrt( Math.pow(diffX, 2) + Math.pow(diffY, 2));
+        return d <= radius;
+
+    }
+
+    private boolean isInCircle2(int x, int y)
+    {
+        Log.d("outerBot" ,String.valueOf(outerBot));
+        Log.d("outerTop" ,String.valueOf(outerTop));
+        Log.d("x" ,String.valueOf(x));
+        Log.d("y" ,String.valueOf(y));
+        return (y < outerBot) && (y > outerTop);
+
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -37,6 +61,10 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
             isFirst = 1;
             _root = (ViewGroup)findViewById(R.id.relativeRoot);
             _knob = (ImageView) findViewById(R.id.knob);
+            ImageView outer = (ImageView) findViewById(R.id.outerCircle);
+            radius = (outer.getBottom() - outer.getTop()) / 2;
+            outerBot = outer.getBottom();
+            outerTop = outer.getTop();;
 
             //////////////////////////////////////////////////////////////////////////////
             Rect offsetViewBounds = new Rect();
@@ -71,46 +99,12 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_joystick);
 
-        _root = (ViewGroup)findViewById(R.id.relativeRoot);
-
-        _knob = (ImageView) findViewById(R.id.knob);
-
-
-        //////////////////////////////////////////////////////////////////////////////
-        Rect offsetViewBounds = new Rect();
-        //returns the visible bounds
-        _knob.getDrawingRect(offsetViewBounds);
-        // calculates the relative coordinates to the parent
-        _root.offsetDescendantRectToMyCoords(_knob, offsetViewBounds);
-
-        int relativeTop = offsetViewBounds.top;
-        int relativeLeft = offsetViewBounds.left;
-        Log.d("a" ,String.valueOf(_knob.getTop()));
-        Log.d("a" ,String.valueOf(_knob.getLeft()));
-
-        //////////////////////////////////////////////////////////////////////////////
-
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(98, 114);
-        //layoutParams.leftMargin = 50;
-        //layoutParams.topMargin = 50;
-        //layoutParams.bottomMargin = -250;
-        //layoutParams.rightMargin = -250;
-
-        //layoutParams.topMargin = relativeTop;
-        //layoutParams.leftMargin = relativeLeft;
-
-
-        //layoutParams.topMargin = _knob.getTop();
-        //layoutParams.leftMargin = _knob.getLeft();
-        //_knob.setLayoutParams(layoutParams);
-
-        //_knob.setOnTouchListener(this);
     }
 
     public boolean onTouch(View view, MotionEvent event) {
         final int X = (int) event.getRawX();
         final int Y = (int) event.getRawY();
-        Log.d("X" ,String.valueOf(X));
+        //Log.d("X" ,String.valueOf(X));
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
@@ -133,10 +127,12 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
                 layoutParams1.topMargin = Y - _yDelta;
                 layoutParams1.rightMargin = -250;
                 layoutParams1.bottomMargin = -250;
-                //layoutParams.rightMargin = 1000;
-                //layoutParams.bottomMargin = 1000;
-                view.setLayoutParams(layoutParams1);
-                Log.d("ACTION_MOVE" ,String.valueOf(_xDelta));
+                if (isInCircle(X,Y))
+                {
+                    view.setLayoutParams(layoutParams1);
+                    //Log.d("ACTION_MOVE" ,String.valueOf(_xDelta));
+                }
+
                 break;
         }
         _root.invalidate();

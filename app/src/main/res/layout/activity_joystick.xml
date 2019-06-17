@@ -10,8 +10,8 @@
 
     <RelativeLayout
         android:id="@+id/relativeRoot"
-        android:layout_width="369dp"
-        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,8 +21,8 @@
             android:id="@+id/outerCircle"
             android:layout_width="345dp"
             android:layout_height="352dp"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             app:srcCompat="@drawable/circle" />
 
         <ImageView
