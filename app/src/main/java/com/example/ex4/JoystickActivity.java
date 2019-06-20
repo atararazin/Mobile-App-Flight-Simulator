@@ -155,4 +155,6 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
         _root.invalidate();
         return true;
     }
+
+
 }

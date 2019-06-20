@@ -35,13 +35,16 @@ public class SendingTask extends AsyncTask<String, String, TcpClient> {
             }
 
         }
-
-
-        //this.client.SendMessage(message[0]);
+        this.client.close();
         return null;
     }
 
     public void addToQueue(String message){
         this.blockingQueue.add(message);
     }
+
+    public void stopClient() {
+        mRun = false;
+    }
+
 }
