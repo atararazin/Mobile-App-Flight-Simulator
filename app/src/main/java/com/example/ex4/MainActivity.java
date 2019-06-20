@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private Socket socket;
     private String ip;
     private int port;
-    TcpClient tcpClient;
+    private TcpClient tcpClient;
+    private ConnectTask connectTask;
+    static public SendingTask sendingTask;
     private Thread thread;
 
     @Override
@@ -44,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
         int port = Integer.parseInt(portString);
 
         this.tcpClient = new TcpClient(ip,port);
-        ConnectTask connectTask = new ConnectTask(tcpClient);
+        this.connectTask = new ConnectTask(tcpClient);
         connectTask.execute("");
 
-        SendingTask sendingTask = new SendingTask(tcpClient);
+        this.sendingTask = new SendingTask(tcpClient);
         sendingTask.addToQueue("first");
         sendingTask.execute("");
         sendingTask.addToQueue("second");
