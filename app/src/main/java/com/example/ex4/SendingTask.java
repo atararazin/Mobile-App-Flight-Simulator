@@ -25,10 +25,10 @@ public class SendingTask extends AsyncTask<String, String, TcpClient> {
             while(!this.blockingQueue.isEmpty()){
                 try{
                     String send = this.blockingQueue.take();
-                    System.out.println("took"+send);
+                    System.out.println("took "+send);
                     dataOutputStream.writeBytes(send+"\n");
-                    System.out.println("sent"+send);
-                    dataOutputStream.flush();
+                    System.out.println("sent " +send);
+                    //dataOutputStream.flush();
                 }catch (Exception e){
                     System.out.println("error writing to socket");
                 }
