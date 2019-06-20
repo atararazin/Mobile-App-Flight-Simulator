@@ -107,6 +107,16 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
 
     }
 
+    @Override
+    protected void onDestroy ()
+    {
+        super.onDestroy();
+        if (isFinishing())
+        {
+            MainActivity.sendingTask.stopClient();
+        }
+    }
+
     public boolean onTouch(View view, MotionEvent event) {
         final int X = (int) event.getRawX();
         final int Y = (int) event.getRawY();
