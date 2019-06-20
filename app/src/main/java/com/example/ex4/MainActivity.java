@@ -3,6 +3,7 @@ package com.example.ex4;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -46,16 +47,11 @@ public class MainActivity extends AppCompatActivity {
         ConnectTask connectTask = new ConnectTask(tcpClient);
         connectTask.execute("");
 
-        MessageSender messageSender = new MessageSender(this.tcpClient);
-        Thread thread = new Thread(messageSender);
-        thread.start();
-
-        //this.tcpClient.startQueue();
-        messageSender.addToQueue("testing1");
-        messageSender.addToQueue("testing2");
-        messageSender.addToQueue("testing3");
-        messageSender.addToQueue("testing4");
-        System.out.println("sent!!");
+        SendingTask sendingTask = new SendingTask(tcpClient);
+        sendingTask.addToQueue("first");
+        sendingTask.execute("");
+        sendingTask.addToQueue("second");
+        sendingTask.addToQueue("third");
 
         Intent intent = new Intent(this, JoystickActivity.class);
         startActivity(intent);

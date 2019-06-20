@@ -24,6 +24,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/ipString"
         android:layout_alignParentRight="true"
@@ -33,6 +34,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@android:dimen/notification_large_icon_height"
         android:layout_marginRight="@android:dimen/notification_large_icon_height"
+        android:layout_marginLeft="@android:dimen/notification_large_icon_height"
         android:hint="@string/IPHint" />
 
 
@@ -53,23 +55,26 @@
 
 
     <EditText
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:id = "@+id/editPort"
-        android:hint = "@string/portHint"
-        android:layout_alignParentRight = "true"
-        android:layout_alignParentEnd = "true"
+        android:id="@+id/editPort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ipString"
         android:layout_alignParentLeft="true"
-        android:background="#fff"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="146dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+
+
         android:layout_toEndOf="@+id/port"
         android:layout_toRightOf="@id/port"
-        android:layout_below="@id/ip"
-        android:layout_marginRight="@android:dimen/notification_large_icon_height"
-        android:layout_marginTop="40dp"
-        android:inputType="textCapSentences|textMultiLine"
-
-
-        />
+        android:background="#fff"
+        android:hint="@string/portHint"
+        android:inputType="textCapSentences|textMultiLine" />
 
 
     <Button
