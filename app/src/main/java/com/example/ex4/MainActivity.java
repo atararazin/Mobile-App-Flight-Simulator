@@ -50,10 +50,7 @@ public class MainActivity extends AppCompatActivity {
         connectTask.execute("");
 
         this.sendingTask = new SendingTask(tcpClient);
-        sendingTask.addToQueue("first");
         sendingTask.execute("");
-        sendingTask.addToQueue("second");
-        sendingTask.addToQueue("third");
 
         Intent intent = new Intent(this, JoystickActivity.class);
         startActivity(intent);
