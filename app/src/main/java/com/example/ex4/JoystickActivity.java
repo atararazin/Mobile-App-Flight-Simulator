@@ -30,6 +30,16 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
     private int radius;
 
 
+    // send the values to the simulator
+    private void sendToSimulator(double x, double y)
+    {
+        String xCommand = "set /controls/flight/aileron " + x + "\n";
+        String yCommand = "set /controls/flight/elevator " + y + "\n";
+
+        SendingTask s = MainActivity.sendingTask;
+        s.addToQueue(xCommand);
+        s.addToQueue(yCommand);
+    }
 
     // The function checks if a point (x,y) is inside the circle
     private boolean isInCircle(int x, int y)
@@ -112,6 +122,7 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
                 layoutParams.topMargin = originalY;
                 layoutParams.leftMargin = originalX;
                 view.setLayoutParams(layoutParams);
+                sendToSimulator(0, 0);
                 break;
 
             case MotionEvent.ACTION_POINTER_DOWN:
@@ -133,21 +144,9 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
 
                 if (isInCircle(layoutParams1.leftMargin, layoutParams1.topMargin) && Math.abs(simulatorX) <= 1 && Math.abs(simulatorY) <= 1)
                 {
-                    Log.d("simulatorX" ,String.valueOf(simulatorX));
-                    Log.d("simulatorY" ,String.valueOf(simulatorY));
                     view.setLayoutParams(layoutParams1);
+                    sendToSimulator(simulatorX, simulatorY);
                 }
-
-                // TODO:
-                // Send the values simulatorX, simulatorY to the simulator!
-                //
-                String xCommand = "set /controls/flight/aileron " + simulatorX + "\n";
-                String yCommand = "set /controls/flight/elevator " + simulatorY + "\n";
-
-                SendingTask s = MainActivity.sendingTask;
-                s.addToQueue(xCommand);
-                s.addToQueue(yCommand);
-
 
 
 
