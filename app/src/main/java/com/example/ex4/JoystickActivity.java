@@ -1,7 +1,6 @@
 package com.example.ex4;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -142,6 +141,13 @@ public class JoystickActivity extends AppCompatActivity implements View.OnTouchL
                 // TODO:
                 // Send the values simulatorX, simulatorY to the simulator!
                 //
+                String xCommand = "set /controls/flight/aileron " + simulatorX + "\n";
+                String yCommand = "set /controls/flight/elevator " + simulatorY + "\n";
+
+                SendingTask s = MainActivity.sendingTask;
+                s.addToQueue(xCommand);
+                s.addToQueue(yCommand);
+
 
 
 
